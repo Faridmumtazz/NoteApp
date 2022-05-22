@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.LoginFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/p"
+        android:layout_marginTop="60dp"
+        android:layout_gravity="center_horizontal"
+        android:text="LOGIN"
+        android:textSize="40sp"
+        android:textColor="@color/black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:layout_gravity="center"
+        android:src="@drawable/binar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <EditText
+
+            android:hint="Masukkan Email"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/loginemail"
+            android:background="@drawable/kotak"
+            android:layout_width="370dp"
+            android:layout_height="60dp">
+
+        </EditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:padding="10dp"
+        android:layout_gravity="center_horizontal"
+        app:passwordToggleEnabled="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:hint="Masukkan Password"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/loginpassword"
+            android:inputType="textPassword"
+            app:passwordToggleEnabled="true"
+            android:background="@drawable/kotak"
+            android:layout_width="370dp"
+            android:layout_height="60dp">
+
+        </EditText>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btnlogin"
+        android:text="Login"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+
+
+            android:id="@+id/daftar"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:text="Belum punya akun ?"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        </TextView>
+
+        <TextView
+
+            android:layout_toRightOf="@id/daftar"
+            android:layout_marginLeft="5dp"
+            android:id="@+id/registrasi"
+            android:textSize="14sp"
+            android:layout_marginTop="20dp"
+            android:text="daftar"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </RelativeLayout>
+
+
+</LinearLayout>
