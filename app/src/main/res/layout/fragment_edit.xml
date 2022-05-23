@@ -20,6 +20,7 @@
         style="@style/InputTextStyle"
         android:layout_marginTop="10dp"
         android:autofillHints="name"
+        android:background="@drawable/kotak"
         android:hint="@string/judul"
         android:inputType="text" />
 
@@ -27,6 +28,7 @@
         android:id="@+id/input_catatan"
         style="@style/InputTextStyle"
         android:layout_height="150dp"
+        android:background="@drawable/kotak"
         android:layout_marginTop="10dp"
         android:autofillHints="name"
         android:hint="@string/catatan"
