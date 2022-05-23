@@ -92,16 +92,15 @@
 
         <TextView
 
-            android:layout_toRightOf="@id/daftar"
-            android:layout_marginLeft="5dp"
             android:id="@+id/registrasi"
-            android:textSize="14sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="20dp"
+            android:layout_toRightOf="@id/daftar"
             android:text="daftar"
             android:textColor="@color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:textSize="14sp"></TextView>
     </RelativeLayout>
 
 

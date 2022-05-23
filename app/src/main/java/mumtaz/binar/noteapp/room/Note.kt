@@ -9,12 +9,9 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 @Parcelize
 data class Note(
-    @PrimaryKey(autoGenerate = true)
-    var id : Int?,
-
-    @ColumnInfo(name = "nama")
-    var nama : String,
-
-    @ColumnInfo(name = "note")
-    var note:String
+    @PrimaryKey(autoGenerate = true) var id: Int?,
+    @ColumnInfo(name = "judul") var judul: String,
+    @ColumnInfo(name = "catatan") var catatan: String,
+    @ColumnInfo(name = "email") var email: String,
+    @ColumnInfo(name = "time") var time: String
 ) : Parcelable

@@ -11,12 +11,16 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.asLiveData
+import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import mumtaz.binar.noteapp.R
 import mumtaz.binar.noteapp.datastore.UserManager
+import mumtaz.binar.noteapp.room.NoteDatabase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,54 +28,68 @@ import retrofit2.Response
 
 class LoginFragment : Fragment() {
 
-    lateinit var email: String
-    lateinit var password: String
-    lateinit var toast : String
-    lateinit var userManager: UserManager
+    private var noteDatabase : NoteDatabase? = null
+
+    private lateinit var email: String
+    private lateinit var password: String
+
+    private lateinit var userManager: UserManager
+    private var cek: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        noteDatabase = NoteDatabase.getInstance(requireContext())
         userManager = UserManager(requireContext())
-
-        val daftar = view.findViewById<TextView>(R.id.registrasi)
-        val login = view.findViewById<Button>(R.id.btnlogin)
-
-        daftar.setOnClickListener {
-            view.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
-        }
-
-        login.setOnClickListener {
-            if (loginemail.text.isNotEmpty() && loginpassword.text.isNotEmpty()){
-                email = loginemail.text.toString()
-                password = loginpassword.text.toString()
-            }
-            else{
-                toast = "Harap Isi Semua Data"
-                custom()
-            }
-        }
-        return view
+        return inflater.inflate(R.layout.fragment_login, container, false)
     }
 
-    fun custom(){
-        val text = toast
-        val toast = Toast.makeText(
-            requireActivity()?.getApplicationContext(),
-            text,
-            Toast.LENGTH_LONG
-        )
-        val text1 =
-            toast.getView()?.findViewById(android.R.id.message) as TextView
-        val toastView: View? = toast.getView()
-        toastView?.setBackgroundColor(Color.TRANSPARENT)
-        text1.setTextColor(Color.RED);
-        text1.setTextSize(15F)
-        toast.show()
-        toast.setGravity(Gravity.CENTER or Gravity.TOP, 0, 960)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        userManager.email.asLiveData().observe(viewLifecycleOwner){
+           if (it != ""){
+               Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+           }
+        }
+
+        registrasi.setOnClickListener {
+            it.findNavController().navigate(R.id.action_loginFragment_to_registerFragment)
+        }
+
+        btnlogin.setOnClickListener {
+            login()
+        }
+
+    }
+
+    private fun login(){
+        email = loginemail.text.toString()
+        password = loginpassword.text.toString()
+        loginUser(email, password)
+    }
+
+    private fun loginUser(email: String, password: String){
+        GlobalScope.async {
+            val user = noteDatabase?.noteDao()?.getUserRegistered(email)
+            requireActivity().runOnUiThread {
+                if (user != null) {
+                    if (email == user.email && password == user.password){
+                        GlobalScope.launch {
+                            userManager.saveData(email)
+                        }
+                        Navigation.findNavController(requireView()).navigate(R.id.action_loginFragment_to_homeFragment)
+                    } else {
+                        Toast.makeText(requireContext(), "Password yang anda masukkan salah",Toast.LENGTH_LONG).show()
+
+                    }
+                }else{
+                    Toast.makeText(requireContext(), "Akun dengan email ${email} belum terdaftar", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
     }
 
 

@@ -1,21 +1,25 @@
 package mumtaz.binar.noteapp.room
 
-import androidx.room.Delete
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 
+@Dao
 interface NoteDao {
 
-    @Insert
-    fun insertStatus(note: Note) : Long
-
-    @Query("SELECT * FROM Note")
-    fun getAllStatus(): List<Note>
-
-    @Delete
-    fun deleteStatus(note: Note) : Int
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun addNote(note: Note): Long
 
     @Update
-    fun updateStatus(note: Note) : Int
+    fun updateNote(note: Note): Int
+
+    @Delete
+    fun deleteNote(note: Note): Int
+
+    @Query("SELECT * FROM Note WHERE Note.email = :email")
+    fun getNote(email: String) : List<Note>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun registerUser(user: User):Long
+
+    @Query("SELECT * FROM User WHERE User.email = :email")
+    fun getUserRegistered(email:String): User
 }
